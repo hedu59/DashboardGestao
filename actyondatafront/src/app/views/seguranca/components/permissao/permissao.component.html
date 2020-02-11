@@ -1,0 +1,28 @@
+<table id="tabelaPermissao" [dtOptions]="dtOptionsP" [dtTrigger]='dtTriggerPermissao' datatable class="table table-sm mt-2">
+  <thead class="thead-default-jca">
+    <tr>
+      <th class="col-md-4" scope="col" style="width: 20%" >Descrição</th>
+      
+      <th class="col-md-5" style="width: 20%">Botão</th>
+      <th class="col-md-4" scope="col" style="width: 20%" >Tela</th>
+      <th class="col-md-1"style="width: 20%">Componente</th>
+      <th class="col-md-1"style="width: 5%">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let a of permissao">
+   
+      <td><i class="i-Business-Man"></i> {{ a.DESCRICAO_TELA }}</td>
+      <td> {{ a.BOTAO }}</td>
+      <td> {{ a.DESCRICAO }}</td>
+      <td> {{ a.COMPONENTE }}</td>
+      <td>  <button *ngIf="a.STATUS==false" class="btn btn-sm btn-outline-danger mr-2" ngbTooltip="Alterar Status"  (click)="alterarPermissao(a)">
+        <i  class="icofont-not-allowed"></i>
+      </button>
+      <button *ngIf="a.STATUS==true" class="btn btn-sm btn-outline-success mr-2" ngbTooltip="Alterar Status"(click)="alterarPermissao(a)">
+          <i class="icofont-check" ></i>
+      </button></td>
+      
+    </tr>
+  </tbody>
+</table>

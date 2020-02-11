@@ -1,0 +1,131 @@
+<div style="height: 400px;">
+  <div class="row mb-2">
+    <div class="col-md-2">
+      <input class="form-control" type="date" name="dataAtualizacao" id="dataAtualizacao"
+        (change)="onDateSelect($event.target.value)" placement="top" ngbTooltip="Data base para correção">
+      <div class="input-group">
+        <!-- <input id="picker1" class="form-control" placeholder="dd/mm/aaaa" name="dp" data-date-format="DD/MM/YYYY" ngbDatepicker #dp="ngbDatepicker" (dateSelect)="onDateSelect($event)">
+        <div class="input-group-append">
+          <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+            <i class="icofont-ui-calendar"></i>
+          </button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-2" style="overflow: auto; height: 200px;">
+    <table id="tabelaTitulos" class="table table-striped table-sm">
+      <div class="module-loader2" *ngIf="moduleLoadingTitulo">
+        <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+      </div>
+      <thead>
+        <tr>
+          <th scope="col"><input type="checkbox" style="margin-bottom: 3px" (click)="marcarTodos($event)"
+              placement="right" ngbTooltip="Marcar / Desmarcar Todos"></th>
+          <th scope="col">Tipo Titulo</th>
+          <th scope="col">Vencimento</th>
+          <th scope="col">Atraso</th>
+          <th scope="col" class="text-right">Valor</th>
+          <th scope="col" class="text-right">Valor Atual</th>
+          <th scope="col">Nº Contrato</th>
+          <th scope="col">Obse</th>
+          <th scope="col" *ngFor="let a of camposVisualizacao"> {{a.DESCRICAO}} </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of titulos">
+          <td><input type="checkbox" id="checkbox" class="checkbox" [checked]="t.FAIXA > 0"
+              (click)="selecionarTitulo($event, t)"></td>
+          <td> {{t.TIPO_TITULO}} </td>
+          <td> {{t.DataVencimentoOriginal | convertDataBr}} </td>
+          <td> {{t.FAIXA}} </td>
+          <td class="text-right">{{t.VALOR_ORIGINAL | currency:'BRL'}} </td>
+          <td class="text-right negrito"> {{t.ValorTotalComAcrescimos | currency:'BRL'}} </td>
+          <td> {{t.NUMERO_CONTRATO}} </td>
+          <td> {{t.OBSE}} </td>
+          <td *ngFor="let a of camposVisualizacao;"> {{getCampo(t, a.CAMPO)}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-4">
+
+      <div class="card tamanho-card">
+        <div class="card-header card-header-divida text-center">
+          <i class="icofont-ui-note"></i> Detalhamento da Dívida
+        </div>
+        <div class="card-body card-azul">
+          <div class="row text-center">
+            <div class="col-md-6 text-left"> Faixa de Atraso: </div>
+            <div class="col-md-6 text-left"> <strong>{{faixaAtraso}} dias</strong> </div>
+
+            <div class="col-md-6 text-left"> Qtde Titulos: </div>
+            <div class="col-md-6 text-left"> <strong>{{qtdeTitulos}}</strong> </div>
+
+            <div class="col-md-6 text-left"> Qtde Titulos Vencidos: </div>
+            <div class="col-md-6 text-left"> <strong>{{qtdVencido}}</strong> </div>
+
+            <div class="col-md-6 text-left"> Qtde Titulos a Vencer </div>
+            <div class="col-md-6 text-left"> <strong>{{qtdVencer}}</strong> </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-4 ">
+      <div class="card tamanho-card">
+        <div class="card-header card-header-divida text-center">
+          <i class="icofont-refresh"></i> Atualização da Dívida
+        </div>
+        <div class="card-body card-azul">
+          <div class="row text-center">
+            <div class="col-md-6 text-left"> Total Principal: </div>
+            <div class="col-md-6 text-left"> <strong> {{somaOriginal | currency:'BRL'}}</strong> </div>
+
+            <div class="col-md-6 text-left"> Total Juros: </div>
+            <div class="col-md-6 text-left"> <strong> {{somaJuros | currency:'BRL'}}</strong> </div>
+
+            <div class="col-md-6 text-left"> Total Multa: </div>
+            <div class="col-md-6 text-left"> <strong> {{somaMulta | currency:'BRL'}}</strong> </div>
+
+            <div class="col-md-6 text-left"> Total Honorarios: </div>
+            <div class="col-md-6 text-left"> <strong> {{somaHonorarios | currency:'BRL'}}</strong> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card tamanho-card">
+        <div class="card-header card-header-divida text-center">
+          <i class="icofont-dollar"></i> Total da Dívida
+        </div>
+        <div class="card-body card-azul">
+          <div class="row text-center">
+            <div class="col-md-6 text-left">
+              <h3>Correção até:</h3>
+            </div>
+            <div class="col-md-6 text-left">
+              <h3> {{dataAtualizacao}} </h3>
+            </div>
+
+            <div class="col-md-6 text-left">
+              <h3>Totalizando:</h3>
+            </div>
+            <div class="col-md-6 text-left">
+              <h3><span class="negrito"> {{somaTotal | currency:'BRL'}}</span></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

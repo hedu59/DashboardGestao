@@ -1,0 +1,106 @@
+<div class="main-header">
+    <div class="logo">
+        <img src="./assets/images/LogoActyonData.png" style="width: 50px; height: 41px;" alt="">
+    </div>
+
+    <div class="menu-toggle" style="float: left" (click)="toggelSidebar()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="d-flex align-items-center">
+        <!-- Search bar -->
+        <!-- <div class="search-bar">
+            <input type="text" placeholder="Pesquisar" (focus)="searchService.searchOpen = true">
+            <i class="search-icon text-muted i-Magnifi-Glass1"></i>
+        </div> -->
+    </div>
+
+    
+    <div  style="margin: auto; color: #989ca0">
+       <b class="hidden-xs"> {{fantasia}} - {{dataIni}} a {{dataFim}}</b>
+    </div>
+
+    <div class="header-part-right">
+        <i fullScreenWindow  class="i-Full-Screen header-icon d-none d-sm-inline-block" role="button"></i>
+
+        
+
+        <div ngbDropdown [placement]="'bottom-right'" class="user col align-self-end">
+            <img src="./assets/images/users/{{nomeImg}}.svg" style="cursor: pointer" id="userDropdown" ngbDropdownToggle alt="">
+
+            <div ngbDropdownMenu aria-labelledby="userDropdown" class="header-account-dropdown">
+                <div class="dropdown-header">
+                    <i class="i-Lock-User mr-1"></i> {{usuario_logado}}
+                </div>
+                <button class="dropdown-item" (click)="modalConfig(configModal)">filtros</button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item" (click)="signout()">Sair</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL PARA INCLUIR ACIONAMENTO -->
+<ng-template #configModal let-modal>
+    <div class="modal-header" [ngStyle]="{'background': '#5a5a5a'}" style="padding-top: 5px; padding-bottom: 5px;">
+        <h4 class="modal-title" id="modal-basic-title" style="color: #fff"> <i class="icofont-funnel"></i>
+           Filtros
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: #fff">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="formFiltro" >
+                <div class="row">
+                        <div class="col-md-12 form-group">
+                            <!-- <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text" id="btnGroupAddon"><i class="icofont-ui-user-group"></i></div>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Contratante" formControlName="contratanteId">
+                            </div> -->
+
+                            <label>Contratante</label>
+
+                            <select class="form-control" formControlName="contratanteId" >
+                              <option value="{{a.CONTRATANTE_ID}}" *ngFor="let a of listaContratante">{{a.FANTASIA}}</option>
+                            </select>
+
+                        </div>
+                    
+                    </div>
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    Data Inicial
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" id="btnGroupAddon"><i class="icofont-ui-calendar"></i></div>
+                        </div>
+                        <input type="date" class="form-control" placeholder="Data Inicial" formControlName="dataInicial">
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    Data Final
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" id="btnGroupAddon"><i class="icofont-ui-calendar"></i></div>
+                        </div>
+                        <input type="date" class="form-control" placeholder="Data Final" formControlName="dataFinal" >
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger btn-rounded" (click)="modal.close('Save click')"> <i
+                class="icofont-close-circled"></i> Fechar </button>
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="salvarFiltros()" > <i class="icofont-check"></i> Buscar</button>
+    </div>
+</ng-template>
+<!-- FIM DO MODAL PARA INCLUIR ACIONAMENTO -->

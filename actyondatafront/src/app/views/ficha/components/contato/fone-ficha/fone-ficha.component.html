@@ -1,0 +1,197 @@
+<div class="row mb-2">
+  <div class="col-md-12">
+    <!-- BOTÃO DROPDOWN DE AÇÕES -->
+    <div ngbDropdown placement="bottom-left" class="d-inline-block">
+      <button class="btn-group btn btn-outline-primary" role="group" id="dropdownBasic1" placement="top"
+        ngbTooltip="Ações" ngbDropdownToggle>
+        <i class="icofont-medical-sign"></i>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button class="dropdown-item" ngbDropdownItem (click)="openModalCadastrar(telefoneModal)">
+          <i class="icofont-medical-sign"></i> Cadastrar
+        </button>
+        <button class="dropdown-item" ngbDropdownItem (click)="modalEditarFone(telefoneModal)">
+          <i class="icofont-edit"></i> Editar
+        </button>
+        <button class="dropdown-item" ngbDropdownItem (click)="moodalExcluirFone(modalConfirm)">
+          <i class="icofont-trash"></i> Excluir
+        </button>
+        <button class="dropdown-item" ngbDropdownItem (click)="enviarSms()">
+          <i class="icofont-ui-messaging"></i> Enviar SMS
+        </button>
+        <button class="dropdown-item" ngbDropdownItem>
+          <i class="icofont-ui-call"></i> Iniciar ligação
+        </button>
+      </div>
+    </div>
+    <!-- FIM DOS BOTÕES DE AÇÕES -->
+  </div>
+</div>
+
+<!-- TABELA DE FONE -->
+<div style="overflow: auto; height: 140px">
+  <table id="tabelaFone" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-sm">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col" style="width: 10%"> Whatsapp</th>
+        <th scope="col" style="width: 20%"> Tipo</th>
+        <th scope="col" style="width: 25"> Número</th>
+        <th scope="col" style="width: 10%"> Prior.</th>
+        <th scope="col" style="width: 15%"> % Localização</th>
+        <th scope="col" style="width: 20%"> Observação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fone of listaFones" (click)="selecionarLinha(fone)" [ngStyle]="{color: corStatus(fone.STATUS), cursor: 'pointer'}"
+        [ngClass]="{'active' : fone.FONE == linha}">
+        <td [ngStyle]="{ color: fone.SE_WHATSAPP === 1 ? '#1fd415' : 'black' }" class="pl-2" style="font-size: 16px;">
+          <i class="icofont-whatsapp"></i>
+        </td>
+        <td>{{ fone.DESCRICAO }}</td>
+        <td>{{ fone.FONE }}</td>
+        <td *ngIf="fone.PRIORITARIO === true">Sim</td>
+        <td *ngIf="fone.PRIORITARIO === false">Não</td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+              [ngStyle]="{'width': fone.PERCENTUAL_LOCALIZACAO+'%'}">{{fone.PERCENTUAL_LOCALIZACAO}} %</div>
+          </div>
+        </td>
+        <td>{{ fone.OBSE }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- FIM DA TABELA DE FONE -->
+
+<!-- MODAL DE TELEOFNES -->
+<ng-template #telefoneModal let-modal>
+  <div class="modal-header" [ngStyle]="{ background: colorModal }" style="padding-top: 5px; padding-bottom: 5px;">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #fff">
+      <i class="icofont-phone"></i> {{ title }} telefone
+    </h4>
+    <button type="button" class="close" aria-label="Close" style="color: #FFF" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="validacao">
+      <ul *ngIf="campos_invalidos">
+        <li class="campo_obrigatorio" *ngFor="let r of retornoMensagem">{{r.Message}}</li>
+      </ul>
+    </div>
+    <form [formGroup]="formTelefone">
+      <div class="row">
+        <div class="col-md-4 form-group">
+          <label for="tipo">Tipo</label>
+          <select class="form-control" formControlName="TIPO" (blur)="validaTelefone()" (click)="validaTelefone()">
+            <option *ngFor="let tipo of tipoFone" value="{{ tipo.TIPO_FONE_ID }}">
+              {{ tipo.DESCRICAO }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+          <label for="fone">Telefone <span class="campo_obrigatorio"> * </span>
+            <ng-template #popContent>Se o tipo for celular deve conter <b>11 digitos</b> Ex:
+              85988775522<br />
+              Se for fixo deve conter <b>10 digitos</b> Ex: 8532332323 <br />
+              Lembrando que para classificar um número como whatsapp o tipo de
+              fone deve ser celular.
+              <b>
+                O botão para salvar só será liberado após os campos serem
+                preenchidos corretamente.
+              </b>
+            </ng-template>
+            <span class="badge badge-secondary" [ngbPopover]="popContent" triggers="mouseenter:mouseleave"
+              placement="right" popoverTitle="Ajuda">
+              ?</span>
+          </label>
+          <input type="text" class="form-control" formControlName="FONE" (keyup)="validaTelefone()"
+            (keypress)="somenteNumeros($event)" maxlength="11" />
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+          <label for="status">Status</label>
+          <select class="form-control" formControlName="STATUS">
+            <option value="0">Positivo</option>
+            <option value="1">Negativo</option>
+            <option value="2">Inconssistente</option>
+          </select>
+        </div>
+
+        <div class="col-md-2 form-group ">
+          <label for="whatsapp">Whatsapp</label>
+          <select class="form-control" formControlName="SE_WHATSAPP" (blur)="validaTelefone()"
+            (click)="validaTelefone()">
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+          </select>
+        </div>
+
+        <div class="col-md-2 form-group pl-0">
+          <label for="prioritario">Prioritário</label>
+          <select class="form-control" formControlName="PRIORITARIO">
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 form-group pl-0">
+          <label for="fone">Observação</label>
+          <input type="text" class="form-control" formControlName="OBSE" />
+        </div>
+
+        <div class="col-md-2 form-group pl-0">
+          <label for="">Localização</label>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Ex: 100" formControlName="LOCALIZACAO">
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="btnGroupAddon">%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-primary btn-rounded" (click)="salvarTelefone()"
+      [disabled]="foneValido == false">
+      <i class="icofont-check"></i> Salvar
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-rounded" (click)="modal.close('Save click')">
+      <i class="icofont-close-circled"></i> Fechar
+    </button>
+  </div>
+</ng-template>
+<!-- FIM DO MODAL DE TELEFONE -->
+
+<!-- MODAL PARA CONFIRMAÇÃO DA EXCLUSÃO DE FONE -->
+<ng-template #modalConfirm let-modal>
+  <div class="modal-header" style="background: #d22346">
+    <h4 class="modal-title" id="modal-title" style="color: #FFF">
+      Exclusão de Telefone
+    </h4>
+    <button type="button" class="close" aria-label="Close button" style="color: #FFF" aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="text-center">
+      <img src="/src/assets/images/icons/detele.svg" width="80" />
+    </div>
+    <p class="text-center mt-4">
+      <strong>Confirma a exclusão do telefone
+        <span class="text-primary">"{{ fone_exclusao }}"</span>?</strong>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="modal.close('Ok')">
+      Confirmar
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-rounded" (click)="modal.dismiss('cancel')">
+      Cancelar
+    </button>
+  </div>
+</ng-template>
+<!-- FIM DO MODAL DE EXCLUSÃO DE FONE -->

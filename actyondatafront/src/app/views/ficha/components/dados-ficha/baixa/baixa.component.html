@@ -1,0 +1,88 @@
+<ngb-tabset>
+  <ngb-tab>
+    <ng-template ngbTabTitle><b> <i class="icofont-money"></i> Originais </b> </ng-template>
+    <ng-template ngbTabContent class="pl-0">
+      <div class="mb-2" style="overflow: auto; height: 350px;">
+        <table class="table table-striped table-sm" style="overflow-x: scroll; overflow-y: scroll; ">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 5%">Tipo Titulo</th>
+              <th scope="col" style="width: 5%">Nº Acordo</th>
+              <th scope="col" style="width: 10%">Nº Contrato</th>
+              <th scope="col" style="width: 5%">Vencimento</th>
+              <th scope="col" style="width: 5%">Data Pagto</th>
+              <th scope="col" style="width: 10%" class="text-right">Valor</th>
+              <th scope="col" style="width: 10%" class="text-right">Valor Juros</th>
+              <th scope="col" style="width: 10%" class="text-right">Valor Multa</th>
+              <th scope="col" style="width: 10%" class="text-right">Valor Honorarios</th>
+              <th scope="col" style="width: 10%" class="text-right">Valor Pago</th>
+              <th scope="col" style="width: 10%">Tipo de Baixa</th>
+              <th scope="col" style="width: 20%">Obsevação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of listaBaixas">
+              <td> {{b.TIPO_TITULO_ID_DESCRICAO}} </td>
+              <td> {{b.ACORDO_ID}} </td>
+              <td> {{b.NUMERO_CONTRATO}} </td>
+              <td> {{b.DATA_VENCIMENTO | convertDataBr}} </td>
+              <td> {{b.DATA_PAGTO | convertDataBr}} </td>
+              <td class="text-right"> {{b.VALOR | currency:'BRL'}} </td>
+              <td class="text-right"> {{b.VALOR_JURO | currency:'BRL'}} </td>
+              <td class="text-right"> {{b.VALOR_MULTA | currency:'BRL'}} </td>
+              <td class="text-right"> {{b.VALOR_HONORARIO | currency:'BRL'}} </td>
+              <td class="text-right"> {{b.VALOR_RECEBIDO | currency:'BRL'}} </td>
+              <td> {{b.TIPO_BAIXA}} </td>
+              <td> {{b.OBSE}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab>
+    <ng-template ngbTabTitle><span (click)="abaBaixaAcordo()"> <i class="icofont-money"></i> Acordo </span>
+    </ng-template>
+    <ng-template ngbTabContent>
+
+      <div class="mb-2" style="overflow: auto; height: 200px;">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Tipo Titulo</th>
+              <th scope="col">Nº Acordo</th>
+              <th scope="col">Nº Contrato</th>
+              <th scope="col">Data Vencimento</th>
+              <th scope="col">Data Pagto</th>
+              <th scope="col" class="text-right">Valor</th>
+              <th scope="col" class="text-right">Valor Juros</th>
+              <th scope="col" class="text-right">Valor Multa</th>
+              <th scope="col" class="text-right">Valor Honorarios</th>
+              <th scope="col" class="text-right">Valor Pago</th>
+              <th scope="col">Tipo de Baixa</th>
+              <th scope="col">Obsevação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of listaBaixasAcordo">
+              <td> {{b.TIPO_TITULO_ID_DESCRICAO}} </td>
+              <td> {{b.ACORDO_ID}} </td>
+              <td> {{b.NUMERO_CONTRATO}} </td>
+              <td> {{b.DATA_VENCIMENTO | convertDataBr}} </td>
+              <td> {{b.DATA_PAGTO | convertDataBr}} </td>
+              <td class="text-right"> {{b.VALOR | currency:'BRL'}} </td>
+              <td class="text-right"> {{b.VALOR_JURO | currency:'BRL'}} </td>
+              <td class="text-right"> {{b.VALOR_MULTA | currency:'BRL'}} </td>
+              <td class="text-right"> {{b.VALOR_HONORARIO | currency:'BRL'}} </td>
+              <td class="text-right"> {{b.VALOR_RECEBIDO | currency:'BRL'}} </td>
+              <td> {{b.TIPO_BAIXA}} </td>
+              <td> {{b.OBSE}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>

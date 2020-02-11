@@ -1,0 +1,79 @@
+<div class="card mt-0" style="overflow: auto; height: 250px">
+  <ngb-tabset>
+    <ngb-tab>
+      <ng-template ngbTabTitle><b> <i class="icofont-address-book"></i> Info Pessoal </b> </ng-template>
+      <ng-template ngbTabContent>
+        <div class="row brder">
+          <div class="col-md-6">Código: <span class="negrito">{{dadosCliente?.DEVEDOR_ID}}</span></div>
+          <div class="col-md-6">CPF: <strong>{{dadosCliente?.CPF}}</strong></div>
+        </div>
+        <div class="row pt-1 brder">
+          <div class="col-md-6">Endereço: <strong>{{dadosCliente?.ENDERECO}}</strong></div>
+          <div class="col-md-6">Nº <strong>{{dadosCliente?.NUMERO}}</strong></div>
+        </div>
+        <div class="row pt-1 brder">
+          <div class="col-md-6">Complemento <strong>{{dadosCliente?.COMPLEMENTO}}</strong></div>
+          <div class="col-md-6">CEP <strong>{{dadosCliente?.CEP}}</strong></div>
+        </div>
+        <div class="row pt-1 brder">
+          <div class="col-md-6">Bairro: <strong>{{dadosCliente?.BAIRRO}}</strong></div>
+          <div class="col-md-6">Cidade: <strong>{{dadosCliente?.CIDADE}} - {{dadosCliente?.UF}} </strong></div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-12"> Data Ultimo  Acionamento: {{dadosCliente?.ULTIMO_ACIONAMENTO | convertDataBr}} </div>
+          <div class="col-md-12"> Data Próximo Acionamento: {{dadosCliente?.PROXIMO_ACIONAMENTO | convertDataBr}} </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab>
+      <ng-template ngbTabTitle><b> <i class="icofont-ui-copy"></i> Info Profissional </b>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <div class="row">
+          <div class="col-md-4">Empresa: <strong>{{dadosCliente?.EMPRESA}}</strong></div>
+          <div class="col-md-4">Cargo: <strong>{{dadosCliente?.CARGO}}</strong></div>
+          <div class="col-md-4">Valor Renda: <strong>{{dadosCliente?.VALOR_RENDA}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Endereço: <strong>{{dadosCliente?.ENDERECO_EMPRESA}}</strong></div>
+          <div class="col-md-4">Nº <strong>{{dadosCliente?.NUMERO_EMPRESA}}</strong></div>
+          <div class="col-md-4">Complemento <strong>{{dadosCliente?.COMPLEMENTO_ENDERECO_EMPRESA}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">CEP: <strong>{{dadosCliente?.CEP_EMPRESA}}</strong></div>
+          <div class="col-md-4">Bairro: <strong>{{dadosCliente?.BAIRRO_EMPRESA}}</strong></div>
+          <div class="col-md-4">Cidade: <strong>{{dadosCliente?.CIDADE_EMPRESA}} - {{dadosCliente?.UF_EMPRESA}}</strong></div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab>
+      <ng-template ngbTabTitle><b> <i class="icofont-ui-user-group"></i> Filiação </b> </ng-template>
+      <ng-template ngbTabContent>
+        <div class="row">
+          <div class="col-md-12">Nome Pai: <strong>{{dadosCliente?.NOME_PAI}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">Nome Mãe: <strong>{{dadosCliente?.NOME_MAE}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">Nome Conjuge: <strong>{{dadosCliente?.NOME_CONJUGUE}}</strong></div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab>
+      <ng-template ngbTabTitle><b> <i class="icofont-ui-text-chat"></i> Observação </b> </ng-template>
+      <ng-template ngbTabContent>
+        <div class="row">
+          <div class="col-md-12"> <strong>Observação:</strong>
+            {{dadosCliente?.OBSE}}
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+
+  </ngb-tabset>
+</div>

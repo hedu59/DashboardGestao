@@ -1,0 +1,258 @@
+<!-- LOAD (SPINNER)  -->
+<div class="module-loader" *ngIf="moduleLoading">
+  <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+</div>
+<!-- FIM DO LOAD -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mt-0">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="text-center">
+            <img class="img-fluid" src="./assets/images/contratante/logo_dark.png" style="width: 150px;">
+          </div>
+        </div>
+        <div class="col-md-4 mt-2">
+          <span>Empresa: <strong>{{dadosCliente.FANTASIA}}</strong></span> <br>
+          <span>Nome: <strong>{{dadosCliente.NOME}}</strong> </span> <br>
+          <span>Identificador: <strong>{{dadosCliente.IDENTIFICADOR_ID}}</strong></span>
+        </div>
+        <div class="col-md-3 mt-2">
+          <span>Data Nascimento: <strong>{{dadosCliente.DATA_NASCIMENTO | convertDataBr}}</strong></span> <br>
+          <span>RG: <strong>{{dadosCliente.RG}}</strong></span> <br>
+          <span *ngIf="dadosCliente.SEXO == 'M'">Sexo: <strong>Masculino</strong> </span>
+          <span *ngIf="dadosCliente.SEXO == 'F'">Sexo: <strong>Feminino</strong> </span>
+        </div>
+        <div class="col-md-2 mt-2 ml-2">
+          <button class="btn btn-outline-primary btn-sm mb-2" (click)="modalPesquisarCliente(modalPesquisa)" placement="bottom"
+            ngbTooltip="Pesquisar"> <i class="icofont-search-2"></i></button>
+
+          <a class="btn btn-outline-danger btn-sm mb-2 ml-2" [routerLink]="[ '/cliente/pesquisaCliente']" placement="bottom" ngbTooltip="Voltar para tela de pesquisa "> 
+            <i class="icofont-reply"></i> 
+          </a> <br>
+
+          <span style="color: rgb(255, 46, 46)" *ngIf="pesquisaFicha == 'nao'" [ngStyle]="{'font-size': '12px'}"> Fila:
+            <strong> {{nome_fila}} </strong></span> <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-md-5">
+    <app-dados-pessoais></app-dados-pessoais>
+  </div>
+
+  <div class="col-md-7">
+    <div class="card mt-0" style="height: 250px">
+      <ngb-tabset #tabContato="ngbTabset">
+        <ngb-tab id="tabFone">
+          <ng-template ngbTabTitle>
+            <b> <i class="icofont-phone"></i> Telefones </b>
+          </ng-template>
+          <ng-template ngbTabContent>
+            <app-fone-ficha [recebeDevedor]="devedor_id"></app-fone-ficha>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab id="tabEmail">
+          <ng-template ngbTabTitle>
+            <b> <i class="icofont-ui-email"></i> E-mail </b>
+          </ng-template>
+          <ng-template ngbTabContent>
+            <app-email-ficha></app-email-ficha>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab id="tabEnd">
+          <ng-template ngbTabTitle>
+            <b> <i class="icofont-google-map"></i> Endereços </b>
+          </ng-template>
+          <ng-template ngbTabContent>
+            <app-endereco-ficha></app-endereco-ficha>
+          </ng-template>
+        </ngb-tab>
+
+      </ngb-tabset>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-md-12">
+    <div class="card mt-0 mb-3">
+      <ngb-tabset #t="ngbTabset">
+
+        <ngb-tab id="tab1">
+          <ng-template ngbTabTitle><b> <i class="icofont-megaphone-alt"></i> Acionamentos</b> </ng-template>
+          <ng-template ngbTabContent>
+            <app-acionamento (emitirDevedor)="atualizarFicha($event)"></app-acionamento>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab id="tab2">
+          <ng-template ngbTabTitle><b> <i class="icofont-money"></i> Títulos </b> </ng-template>
+          <ng-template ngbTabContent>
+            <app-titulo></app-titulo>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab id="tab3">
+          <ng-template ngbTabTitle><b> <i class="icofont-money"></i> Baixas </b> </ng-template>
+          <ng-template ngbTabContent>
+            <hr style="margin-top: -8px; margin-bottom: 7px; border: 0; border-top: 1px solid #f0dda6; height: 0;">
+            <app-baixa></app-baixa>
+          </ng-template>
+        </ngb-tab>
+
+      </ngb-tabset>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE PESQUISA DE CLIENTE NA FICHA   -->
+<ng-template #modalPesquisa let-modal>
+  <div>
+    <!-- LOAD (SPINNER)  -->
+    <div class="module-loader2" *ngIf="moduleLoadingPesquisa">
+      <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+    </div>
+    <!-- FIM DO LOAD -->
+
+    <div class="modal-header" [ngStyle]="{'background': '#466eb0'}" style="padding-top: 5px; padding-bottom: 5px;">
+      <h4 class="modal-title" id="modal-basic-title" style="color: #fff"> <i class="icofont-search-2"></i> Pesquisar
+        Cliente
+      </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true" style="color: #fff">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="validacao">
+        <ul *ngIf="campos_invalidos">
+          <li class="campo_obrigatorio" *ngFor="let r of retornoMensagem">{{r.Message}}</li>
+        </ul>
+      </div>
+      <form [formGroup]="formPesquisa">
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label> Contratante </label>
+            <select class="form-control" formControlName="contratante">
+              <option value="">Todos</option>
+              <option *ngFor="let c of contratantes" value="{{c.CONTRATANTE_ID}}"> {{c.FANTASIA}} </option>
+            </select>
+          </div>
+
+          <div class="col-md-3 form-group">
+            <label> Tipo de Pesquisa </label>
+            <select class="form-control" formControlName="tipoPesquisa">
+              <option value="3"> Nome </option>
+              <option value="1"> CPF/CNPJ </option>
+              <option value="2"> Código do Cliente </option>
+              <option value="4"> Código de Identificação </option>
+            </select>
+          </div>
+
+          <div class="col-md-5 form-group">
+            <label>
+              Dados da pesquisa <span class="campo_obrigatorio"> * </span>
+              <input type="checkbox" class="ml-2" id="checkbox" name="checkbox" formControlName="dividaAtiva">
+              <label for="checkbox" class="ml-2 mb-0">Divida ativa</label>
+            </label>
+            <input class="form-control" id="dadosPesquisa" placeholder="Digite o texto da pesquisa"
+              formControlName="dadosPesquisa" autofocus="true" maxlength="50">
+          </div>
+
+        </div>
+
+        <div class="col-md-12 p-0" style="overflow: auto; height: 250px">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Contratante</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let d of retornoPesquisa; let i=index">
+                <td> {{d.FANTASIA}} </td>
+                <td> {{d.NOME}} </td>
+                <td> {{d.CPF}} </td>
+                <td> <button class="btn btn-sm btn-outline-primary mr-2" ngbTooltip="Abrir"
+                    (click)="abrirFicha(d.DEVEDOR_ID, d.CONT_ID)">
+                    <i class="icofont-document-folder"></i> </button> </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <span class="text-left" [hidden]="!qtdRegistros"> Qtde Registros: <strong> {{qtdRegistros-1}} </strong> </span>
+      <button type="button" class="btn btn-outline-danger btn-rounded" (click)="modal.close('Save click')"> <i
+          class="icofont-close-circled"></i> Fechar </button>
+      <button type="button" class="btn btn-outline-primary btn-rounded" (click)="pesquisar()"> <i
+          class="icofont-search"></i> Pesquisar </button>
+    </div>
+  </div>
+</ng-template>
+<!-- FIM DO MODAL -->
+
+<!-- MODAL PARA FILA  -->
+<ng-template #modalFila let-modal>
+  <div>
+    <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; background: #4c6eb0">
+      <h4 class="modal-title" id="modal-basic-title" style="color: #fff"> Fila </h4>
+    </div>
+
+    <!-- LOAD (SPINNER)  -->
+    <div class="module-loader2" *ngIf="moduleLoadingFila">
+      <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+    </div>
+    <!-- FIM DO LOAD -->
+
+    <div *ngIf="temFila == false" class="modal-body text-center pb-2">
+      <h3><strong> NENHUMA FILA ENCONTRADA </strong></h3>
+      <img src="./assets/images/page-not-found.svg" width="150" alt="">
+    </div>
+
+    <div *ngIf="temFila" class="modal-body">
+      <table class="table table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col"> Código </th>
+            <th scope="col"> Nome da Fila </th>
+            <th scope="col" class="text-right ml-2"> Ação </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ resultFIla.FILA_ID }}</td>
+            <td>{{ resultFIla.NOME_FILA }}</td>
+            <td class="text-right ml-2">
+              <button class="btn btn-sm btn-outline-primary" (click)="entrarNaFila()"> <i class="icofont-sign-in"></i>
+                Entrar </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline-danger btn-rounded" [routerLink]="['/']" (click)="modal.close()">
+        <i class="icofont-curved-double-left"></i> Voltar para o inicio
+      </button>
+
+      <button type="button" class="btn btn-outline-primary btn-rounded" (click)="pesquisarFilaAtiva()">
+        <i class="icofont-refresh"></i> Pesquisar Fila
+      </button>
+    </div>
+  </div>
+</ng-template>
+<!-- FIM DO MODAL -->

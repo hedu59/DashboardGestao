@@ -1,0 +1,32 @@
+export class ConfigAcaoCobrancaModel {
+    ACAO_ID: number;
+    DESCRICAO: string;
+    SE_ATIVO: string;
+    QTDE_DIAS_PROX_ACION: number;
+    SE_PROPRIEDADE: string;
+    QTDE_DIAS_PROPRIEDADE: number;
+    SE_PRODUTIVO: string;
+    SE_OBSE_OBRIG: string;
+    SE_CONTATO: string;
+    DATA_CADASTRO: Date;
+    INCL_OPER_ID: string;
+    DATA_ALTERACAO: Date;
+    OCOR_OPER_ID: string;
+    TIPO_ROLAGEM: string;
+    SITUACAO_ID: number;
+    CONT_ID: number;
+    LIMITE_ACIONAMENTO: boolean;
+    SE_ROLAGEM_PREVISAO: string;
+    SE_ACIONAMENTO_MESMO_DIA: string;
+    SE_PERM_DATA_RETRO: string;
+    TIPO_ACIONAMENTO: string;
+    SE_VISIVEL: string;
+    ENVIA_DISCADOR: string;
+    SE_REMUNERA: string;
+    SE_HABILITA_CALENDARIO: string;
+    SE_ACAO_AUTO: string;
+    SE_UTIL_SCRIPT: string;
+    SCRIPT: boolean;
+    PERCENTUAL_LOCALIZACAO: number;
+    SE_FINALIZA_TABULACAO: string;
+}

@@ -1,0 +1,158 @@
+<!-- [hidden]="!detalhamento" -->
+<div class="row"   id="detalhe"> 
+  
+</div>
+
+<div class="row">
+  <!-- CARD DE PERFIS -->
+  <div class="col-md-6 perfil">
+    <div class="card mb-3" style="height: 300px" >
+      <div class="card-body pb-0">
+        <div class="card-title negrito"> <i class="icofont-numbered"></i> Distribuição por faixa  </div>
+        <hr>
+        <div style="padding-bottom: 2px">
+          <div id="chartContainer" style="height: 220px; width: 100%" ></div>
+        </div>                    
+      </div>
+    </div>
+  </div>
+  <!-- CARD DE PERFIS -->
+  <div class="col-md-6 perfil">
+    <div class="card mb-3" style="height: 300px " >
+      <div class="card-body pb-0">
+        <div class="card-title negrito"> <i class="icofont-bill-alt"></i> VALOR x TICKET MÉDIO 
+        <input type="button" style="float: right" class="btn btn-sm btn-primary" value="Ticket" (click)='ticketMedioXValor()' ngbTooltip="Ticket Médio"> 
+      </div>
+      <hr>
+      <div class="row">
+        <div *ngIf="visibilidade" id="chartContainer2" style="height: 220px; width: 100%" ></div>    
+        <div *ngIf="!visibilidade" id="chartContainer3" style="height: 220px; width: 100%" ></div>           
+        </div>                
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row"> 
+  <!-- CARD DE TELAS -->
+  <div class="col-md-6"  >
+    <div class="card mb-3"style="height: 300px">
+      <div class="card-body pb-0">
+        <div class="card-title negrito"> <i class="i-Monitor-5"></i> CPC - CPCA 
+        
+        </div>
+        <hr>
+        <!-- <app-tela></app-tela> -->
+      <div class="row">
+      
+      <div class="col-md-12">
+        <div class="row">        
+          <div  id="chartContainer4" style="height: 220px; width: 48%"> </div>
+          <div  id="chartContainer5" style="height: 220px; width: 48%"> </div>
+        </div>
+      </div>
+       
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6"  >
+      <div class="card mb-3"style="height: 300px">
+        <div class="card-body pb-0">
+          <div class="card-title negrito"> <i class="i-Monitor-5"></i> Taxa de Conversão 
+          
+          </div>
+          <hr>
+          <!-- <app-tela></app-tela> -->
+        <div class="row">
+        
+        <div class="col-md-12">
+          <div class="row">        
+       
+            <div  id="chartContainer6" style="height: 220px; width: 100%"> </div> 
+          </div>
+        </div>
+         
+        </div>
+        </div>
+      </div>
+    </div>
+  
+</div>
+
+
+
+
+<div class="row">
+  <!-- CARD DE PERFIS -->
+  <div class="col-md-4 perfil">
+    <div class="card mb-3" style="height: 300px" >
+      <div class="card-body pb-0">
+        <div class="card-title negrito"> <i class="i-Administrator"></i> {{tituloChartUm}} 
+        </div>
+        <hr>
+        <div style="padding-bottom: 2px">
+          <div id="chartContainer11" style="height: 220px; " ></div>
+        </div>            
+        
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="col-md-8"  >
+      <div class="card mb-3"style="height: 300px">
+        <div class="card-body pb-0">
+          <div class="card-title negrito"> <i class="i-Monitor-5"></i> VALOR x TICKET MÉDIO 
+          <input type="button" style="float: right" class="btn btn-sm btn-primary" value="Ticket" (click)='ticketMedioXValorUF()' ngbTooltip="Ticket Médio"> 
+          </div>
+          <hr>
+          
+        <div class="row">
+            <div *ngIf="visibilidade2" id="chartContainer12" style="height: 220px; width: 100%" ></div>    
+            <div *ngIf="!visibilidade2" id="chartContainer13" style="height: 220px; width: 100%" ></div>           
+        </div>
+        </div>
+      </div>
+  </div>
+
+</div>
+<div class="row">
+    <div class="col-md-4 perfil">
+        <div class="card mb-3" style="height: 300px" >
+          <div class="card-body pb-0">
+            <div class="card-title negrito"> <i class="i-Administrator"></i> Taxa de Conversão % 
+            </div>
+            <hr>
+            <div style="padding-bottom: 2px">
+              <div id="chartContainer14" style="height: 220px;" ></div>
+            </div>            
+            
+          </div>
+        </div>
+      </div> 
+
+      <div class="col-md-8"  >
+          <div class="card mb-3"style="height: 300px">
+            <div class="card-body pb-0">
+              <div class="card-title negrito"> <i class="i-Monitor-5"></i> VALOR x TICKET MÉDIO - REGIÃO
+              
+              </div>
+              <hr>
+              
+            <div class="row">
+            
+            <div class="col-md-12">
+              <div class="row">        
+                <div  id="chartContainer15" style="height: 220px; width: 48%"> </div>
+                <div  id="chartContainer16" style="height: 220px; width: 48%"> </div>
+              </div>
+            </div>
+             
+            </div>
+            </div>
+          </div>
+      </div>
+   
+      
+</div>
+

@@ -1,0 +1,135 @@
+<!-- <div class="row">
+  <div class="col-md-12 perfil">
+      <div class="card mb-3" style="height: 70px" >
+          <div class="card-body pb-0">
+              <div class="card-title negrito"> <i class="i-Administrator"></i> MARISA  
+                
+               
+                <input type="button" style="float: right; margin-left: 2px" class="btn btn-sm btn-primary" value="Período" (click)='ticketMedioXValor()' ngbTooltip="Período"> 
+                <input type="button" style="float: right; margin-left: 2px" class="btn btn-sm btn-primary" value="Contratante" (click)='ticketMedioXValor()' ngbTooltip="Tabela"> 
+                <input type="text" style=" margin-left: 2px; max-width: 300px;" class="form-control" value="" (click)='ticketMedioXValor()' ngbTooltip="Período">   
+              </div>             
+          </div>
+      </div>
+  </div>
+
+  <hr>
+
+</div> -->
+<div class="row">
+    <!-- CARD DE PERFIS -->
+    <div class="col-md-4 perfil">
+      <div class="card mb-3" style="height: 300px" >
+        <div class="card-body pb-0">
+          <div class="card-title negrito"> <i class="i-Administrator"></i> {{tituloChartUm}} 
+            <!-- <input type="button" style="float: right" class="btn btn-sm btn-primary" value="%" (click)='TaxaDeConversao()' ngbTooltip="Conversão">  -->
+          </div>
+          <hr>
+          <div style="padding-bottom: 2px">
+            <div id="chartContainer" style="height: 220px; " ></div>
+          </div>            
+          
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="col-md-8"  >
+        <div class="card mb-3"style="height: 300px">
+          <div class="card-body pb-0">
+            <div class="card-title negrito"> <i class="i-Monitor-5"></i> VALOR x TICKET MÉDIO 
+            <input type="button" style="float: right" class="btn btn-sm btn-primary" value="Ticket" (click)='ticketMedioXValor()' ngbTooltip="Ticket Médio"> 
+            </div>
+            <hr>
+            <!-- <app-tela></app-tela> -->
+          <div class="row">
+          <div *ngIf="visibilidade" id="chartContainer2" style="height: 220px; width: 100%" ></div>    
+          <div *ngIf="!visibilidade" id="chartContainer10" style="height: 220px; width: 100%" ></div>           
+          </div>
+          </div>
+        </div>
+    </div>
+  
+  </div>
+  <div class="row">
+      <div class="col-md-4 perfil">
+          <div class="card mb-3" style="height: 300px" >
+            <div class="card-body pb-0">
+              <div class="card-title negrito"> <i class="i-Administrator"></i> Taxa de Conversão % 
+                <!-- <input type="button" style="float: right" class="btn btn-sm btn-primary" value="%" (click)='TaxaDeConversao()' ngbTooltip="Conversão">  -->
+              </div>
+              <hr>
+              <div style="padding-bottom: 2px">
+                <div id="chartContainer6" style="height: 220px;" ></div>
+              </div>            
+              
+            </div>
+          </div>
+        </div> 
+
+        <div class="col-md-8"  >
+            <div class="card mb-3"style="height: 300px">
+              <div class="card-body pb-0">
+                <div class="card-title negrito"> <i class="i-Monitor-5"></i> VALOR x TICKET MÉDIO 
+                
+                </div>
+                <hr>
+                <!-- <app-tela></app-tela> -->
+              <div class="row">
+              
+              <div class="col-md-12">
+                <div class="row">        
+                  <div  id="chartContainer3" style="height: 220px; width: 48%"> </div>
+                  <div  id="chartContainer4" style="height: 220px; width: 48%"> </div>
+                </div>
+              </div>
+               
+              </div>
+              </div>
+            </div>
+        </div>
+      <!-- <div class="col-md-4 perfil">
+          <div class="card mb-3" style="height: 350px" >
+            <div class="card-body pb-0">
+              <div class="card-title negrito"> <i class="i-Administrator"></i> TESTE
+                <input type="button" style="float: right" class="btn btn-sm btn-primary" value="%" (click)='TaxaDeConversao()' ngbTooltip="Conversão"> 
+              </div>
+              <hr>
+              <div style="padding-bottom: 2px">
+                
+              </div>            
+              
+            </div>
+          </div>
+        </div> -->
+        
+  </div>
+
+
+  <!-- botão flutuante -->
+
+  <!-- <div class="fab">
+      <button class="main">
+      </button>
+      <ul>
+        <li>
+          <label for="opcao1">Opção 1</label>
+          <button id="opcao1">
+          
+          </button>
+        </li>
+        <li>
+          <label for="opcao2">Opção 2</label>
+          <button id="opcao2">
+          
+          </button>
+        </li>
+        <li>
+          <label for="opcao3">Opção 3</label>
+          <button id="opcao3">
+          
+          </button>
+        </li>
+      </ul>
+    </div>
+     -->

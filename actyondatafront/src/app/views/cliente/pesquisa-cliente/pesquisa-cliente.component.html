@@ -1,0 +1,255 @@
+<ng-progress #progressBar></ng-progress>
+
+<!-- LOAD (SPINNER)  -->
+<!-- <div class="module-loader" *ngIf="moduleLoading">
+  <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+</div> -->
+<!-- FIM DO LOAD -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-3">
+      <div class="card-body pb-0">
+        <div class="card-title negrito"> <i class="i-File-Search"></i> Pesquisar Cliente </div>
+        <hr>
+        <form [formGroup]="formPesquisa" (ngSubmit)="pesquisar(progressBar)">
+          <div class="row">
+            <div class="col-md-3 form-group">
+              <label>Contratante</label>
+              <select class="form-control" formControlName="contratante">
+                <option value="">Todos</option>
+                <option *ngFor="let c of contratantes" value="{{c.CONTRATANTE_ID}}"> {{c.FANTASIA}} </option>
+              </select>
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label>Tipo de Pesquisa </label>
+              <select class="form-control" formControlName="tipoPesquisa" (change)="limpaCampos($event.target.value)">
+                <option value="3"> Nome </option>
+                <option value="1"> CPF/CNPJ </option>
+                <option value="2"> Código do Cliente </option>
+                <option value="4"> Código de Identificação </option>
+              </select>
+            </div>
+
+            <div class="col-md-5 form-group pl-0">
+              <label>
+                Dados da pesquisa <span class="campo_obrigatorio"> * </span> <span class="badge badge-secondary" ngbPopover="Para os campos CPF, Codigo e Identificação só é permitido números!" triggers="mouseenter:mouseleave" popoverTitle="Ajuda">?</span>
+                <input type="checkbox" class="ml-2" id="checkbox" name="checkbox" formControlName="dividaAtiva"> 
+                <label for="checkbox" class="ml-2 mb-0">Trazer clientes com divida ativa</label>
+              </label>
+              <input class="form-control" id="dadosPesquisa" placeholder="Digite o texto da pesquisa" formControlName="dadosPesquisa" autofocus="true" (keypress)="somenteNumeros($event)" maxlength="{{tamanho}}">
+            </div>
+
+            <div class="col-md-1 form-group mb-3 pl-0">
+              <label></label>
+              <btn-loading btnClass="btn btn-sm btn-primary btn-block mt-2" ngbTooltip="Pesquisar"
+                [loadingText]="loadingText" [loading]="loading">
+                <i class="icofont-search-user"></i>
+              </btn-loading>
+
+            </div>
+
+            <div class="col-md-1 form-group mb-3 pl-0">
+              <label></label>
+              <!-- <button class=" btn btn-success btn-block mt-1" RouterLink="/cliente/cadastrarCliente" RouterActive="Active">Cadastrar</button> -->
+              <a class="btn btn-sm btn-success btn-block mt-2" ngbTooltip="Cadastrar"
+                [routerLink]="['/cliente/cadastrarCliente']"><i class="icofont-ui-add"></i></a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="mostrarTabelas">
+  <div class="col-md-12">
+    <div class="card mb-3 card-pesquisa-cliente">
+      <div class="card-body">
+        <div class="card-title negrito"> <i class="icofont-listine-dots"></i> Lista de Clientes </div>
+        <hr>
+        <div class="card-pesquisa-dados">
+          <table id="aaa" datatable [dtOptions]="dtOptions" class="table table-hover table-sm table-pesquisa-devedor">
+            <thead class="thead-blue-jca">
+              <tr>
+                <th scope="col" style="width: 20%"> Contratante </th>
+                <th scope="col" style="width: 30%"> ID - Nome </th>
+                <th scope="col" style="width: 15%"> CPF </th>
+                <th scope="col" style="width: 15%"> Cidade </th>
+                <th scope="col" style="width: 5%"> UF </th>
+                <th scope="col" style="width: 35%"> Ações </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cliente of retornoPesquisa"
+                (click)="clienteSelecionado(cliente.DEVEDOR_ID, cliente.CONT_ID)" [ngClass]="{'active' : cliente.DEVEDOR_ID == linha}">
+                <td> {{cliente.FANTASIA}} </td>
+                <td> {{cliente.DEVEDOR_ID}} - {{cliente.NOME}} </td>
+                <td> {{cliente.CPF | convertCpf}} </td>
+                <td> {{cliente.CIDADE}} </td>
+                <td> {{cliente.UF}} </td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary mr-2" ngbTooltip="Abrir Ficha" (click)="abrirFicha(cliente.DEVEDOR_ID, cliente.CONT_ID)"> 
+                    <i class="icofont-document-folder"></i> </button>
+                  <button class="btn btn-sm btn-outline-dark mr-2" ngbTooltip="Editar Cliente" (click)="editarCliente(cliente.DEVEDOR_ID)">
+                    <i class="icofont-ui-edit"></i>
+                  </button>
+                  <!-- <button class="btn btn-sm btn-outline-danger" ngbTooltip="Exportar PDF"> <i
+                      class="icofont-file-pdf"></i> </button> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-12" [hidden]="!mostrarTabelas">
+
+    <form-wizard>
+      <wizard-step [title]="'Titulos'" (onNext)="abaSelecionada()" [isActive]="false">
+        <div class="row ml-0">
+          <input type="checkbox" class="ml-2" id="filtrarValor" name="filtrarValor" (click)="filtrarValor()"> 
+          <label for="filtrarValor" class="ml-2 mb-0">Mostrar somente titulos em aberto</label>
+        </div>
+        <div class="card-pesquisa-dados">
+          <table id="dt" datatable [dtOptions]="dtOptionsTitulos" [dtTrigger]="dtTrigger" class="table table-sm">
+            <thead class="thead-default-jca">
+              <tr>
+                <th scope="col">Tipo Titulo</th>
+                <th scope="col">Nº Contrato</th>
+                <th scope="col">Vencimento</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Data Baixa</th>
+                <th scope="col">Tipo Baixa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let titulos of titulosCliente" [ngStyle]="{'color':getColor(titulos.VALOR)}">
+                <td>{{titulos.DESCRICAO}} </td>
+                <td>{{titulos.NUMERO_CONTRATO}}</td>
+                <td>{{titulos.DATA_VENCIMENTO | convertDataBr}}</td>
+                <td>{{titulos.VALOR | currency:'BRL':true}} </td>
+                <td>{{titulos.DATA_PAGTO | convertDataBr}}</td>
+                <td>{{titulos.TIPO_BAIXA}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </wizard-step>
+
+      <wizard-step [title]="'Telefones'" (onNext)="abaSelecionada()" (onPrev)="abaSelecionada()" [isActive]="false">
+        <div class="card-pesquisa-dados">
+          <table id="tabelaFone" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTriggerFone" class="table table-sm">
+            <thead class="thead-default-jca">
+              <tr>
+                <th scope="col">Tipo</th>
+                <th scope="col">Número</th>
+                <th scope="col">Prior.</th>
+                <th scope="col">% Localização</th>
+                <th scope="col">Whatsapp</th>
+                <th scope="col">Observação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fone of fonesCliente">
+                <td>{{ fone.DESCRICAO }}</td>
+                <td>{{ fone.FONE }}</td>
+                <td>{{ cnvertTipo(fone.PRIORITARIO) }}</td>
+                <td> <ngb-progressbar showValue="true" type="success" [value]="fone.PERCENTUAL_LOCALIZACAO"></ngb-progressbar> </td>
+                <td>{{ cnvertTipo(fone.SE_WHATSAPP) }}</td>
+                <td>{{ fone.OBSE }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </wizard-step>
+
+      <wizard-step [title]="'Acionamentos'" (onNext)="abaSelecionada()" (onPrev)="abaSelecionada()" [isActive]="false">
+        <div class="card-pesquisa-dados">
+          <table id="tableAcionamentos" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTriggerAcionamentos"
+            class="table table-sm">
+            <thead class="thead-default-jca">
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Operador</th>
+                <th scope="col">Fone</th>
+
+                <th scope="col">Ocorrência</th>
+                <th scope="col">Histórico</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of acionamentos">
+                <td> {{a.DATA | date: 'dd/MM/yyyy hh:mm:ss'}} </td>
+                <td> {{a.COBRADOR_NOME}} </td>
+                <td> {{a.FONE}} </td>
+
+                <td> {{a.DESCRICAO}} </td>
+                <td> {{a.MENSAGEM}} </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </wizard-step>
+
+      <wizard-step [title]="'E-mails'" (onNext)="abaSelecionada()" (onPrev)="abaSelecionada()" [isActive]="false">
+        <div class="card-pesquisa-dados">
+
+          <table id="tabelaEmail" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTriggerEmail" class="table table-sm">
+            <thead class="thead-default-jca">
+              <tr>
+                <th scope="col">E-mail</th>
+                <th scope="col">Tipo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let email of emailsCliente">
+                <td>{{ email.EMAIL }}</td>
+                <td>{{ email.SITUACAO }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </wizard-step>
+
+      <wizard-step [title]="'Dados Pessoais'" (onNext)="abaSelecionada()" (onPrev)="abaSelecionada()"
+        [isActive]="false">
+        <form #basicForm="ngForm" class="card-pesquisa-dados">
+          <div class="card-pesquisa-dados">
+            <table id="tableDadosPessoais" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTriggerDadosPessoais"
+              class="table table-sm">
+              <thead class="thead-default-jca">
+                <tr>
+                  <th scope="col">CEP</th>
+                  <th scope="col">Endereço</th>
+                  <th scope="col">Bairro</th>
+                  <th scope="col">Cidade</th>
+                  <th scope="col">UF</th>
+                  <th scope="col">Estado Civil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let dados of dadosPessoais">
+                  <td>{{ dados.CEP }}</td>
+                  <td>{{ dados.ENDERECO }} {{ dados.NUMERO }}</td>
+                  <td>{{ dados.BAIRRO }}</td>
+                  <td>{{ dados.CIDADE }}</td>
+                  <td>{{ dados.UF }}</td>
+                  <td>{{ dados.ESTADO_CIVIL }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </wizard-step>
+
+    </form-wizard>
+  </div>
+</div>

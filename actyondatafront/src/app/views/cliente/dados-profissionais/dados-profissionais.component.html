@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-md-6"> <span>ID: <strong>{{devedor_id}} - {{nome_cliente}} </strong></span> </div>
+  <div class="col-md-6 text-right"></div>
+</div>
+
+<div class="card-devedor">
+  <form [formGroup]="formDadoProfissionais" class="mt-2">
+    <div class="row">
+      <div class="col-md-2 form-group ">
+        <label> Empresa </label>
+        <input type="text" class="form-control" id="empresa" placeholder="Nome da Empresa" formControlName="EMPRESA">
+      </div>
+      <div class="col-md-2 form-group ">
+        <label> Cargo </label>
+        <input type="text" class="form-control" id="cargo" placeholder="Cargo" formControlName="CARGO">
+      </div>
+      <div class="col-md-2 form-group ">
+        <label> Valor Renda (R$) </label>
+        <!-- <input type="text" class="form-control" id="valor_renda" formControlName="VALOR_RENDA" placeholder="Valor da Renda"> -->
+        <input type="text" class="form-control" id="valor_renda" formControlName="VALOR_RENDA" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+      </div>
+      <div class="col-md-2 form-group ">
+        <label> CEP </label>
+        <input type="text" class="form-control" id="cep" placeholder="CEP" formControlName="CEP_EMPRESA" maxlength="8">
+      </div>
+
+      <div class="col-md-3 form-group ">
+        <label> Endereço </label>
+        <input type="text" class="form-control" id="endereco" placeholder="Endereço" formControlName="ENDERECO_EMPRESA">
+      </div>
+
+      <div class="col-md-1 form-group ">
+        <label> Número </label>
+        <input type="text" class="form-control" id="numero" placeholder="Número" formControlName="NUMERO_EMPRESA">
+      </div>
+
+      <div class="col-md-3 form-group ">
+        <label> Complemento </label>
+        <input type="text" class="form-control" id="complemento" placeholder="Complemento"
+          formControlName="COMPLEMENTO_ENDERECO_EMPRESA" maxlength="10">
+      </div>
+
+      <div class="col-md-2 form-group ">
+        <label> Bairro </label>
+        <input type="text" class="form-control" id="bairro" placeholder="Bairro" formControlName="BAIRRO_EMPRESA">
+      </div>
+
+      <div class="col-md-2 form-group ">
+        <label> Cidade </label>
+        <input type="text" class="form-control" id="cidade" placeholder="cidade" formControlName="CIDADE_EMPRESA">
+      </div>
+
+      <div class="col-md-2 form-group ">
+        <label>UF</label>
+        <select class="form-control" formControlName="UF_EMPRESA">
+          <option value="">--</option>
+          <option value="AC">AC</option>
+          <option value="AL">AL</option>
+          <option value="AM">AM</option>
+          <option value="AP">AP</option>
+          <option value="BA">BA</option>
+          <option value="CE">CE</option>
+          <option value="DF">DF</option>
+          <option value="ES">ES</option>
+          <option value="GO">GO</option>
+          <option value="MA">MA</option>
+          <option value="MG">MG</option>
+          <option value="MS">MS</option>
+          <option value="MT">MT</option>
+          <option value="PA">PA</option>
+          <option value="PB">PB</option>
+          <option value="PE">PE</option>
+          <option value="PI">PI</option>
+          <option value="PR">PR</option>
+          <option value="RJ">RJ</option>
+          <option value="RN">RN</option>
+          <option value="RO">RO</option>
+          <option value="RR">RR</option>
+          <option value="RS">RS</option>
+          <option value="SC">SC</option>
+          <option value="SR">SE</option>
+          <option value="SP">SP</option>
+          <option value="TO">TO</option>
+        </select>
+      </div>
+
+      <div class="col-md-2 form-group text-left">
+        <label for=""></label>
+        <button class="btn btn-block btn-outline-primary" (click)="salvar()"> <i class="icofont-save"></i>
+          Salvar </button>
+      </div>
+
+    </div>
+  </form>
+</div>

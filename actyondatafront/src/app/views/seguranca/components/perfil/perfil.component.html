@@ -1,0 +1,192 @@
+
+<div class="row">
+  <!-- CARD DE PERFIS -->
+
+  <div class="col-md-6 perfil">
+    <div class="card mb-3" style="height: 450px" >
+      <div class="card-body pb-0">
+        <div class="card-title negrito"> <i class="i-Administrator"></i> Perfis </div>
+        <hr>
+        <div style="padding-bottom: 2px">
+            <button class="btn btn-success btn-rounded mb-1 btn-sm" style="margin-right: 10px" (click)="modalCadastrar(perfilModal)"> <i class="icofont-plus"></i> Novo </button>
+            <button class="btn btn-outline-info btn-rounded mb-1 btn-sm" (click)="modalClonarPerfil(perfilModalClone)"> <i class="icofont-ui-copy"></i> Clonar </button>
+        </div>            
+        <table id="tabelaPerfil" [dtOptions]="dtOptions" [dtTrigger]='dtTriggerPerfil' datatable class="table table-sm mt-2">
+            <thead class="thead-default-jca">
+              <tr>
+
+                <th class="col-md-3" >Descrição</th>
+                <th class="col-md-2">Status</th> 
+                <th class="col-md-1">Alterar</th>              
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of perfil" (click)="selecionarLinha(a)" [ngStyle]="{'cursor': 'pointer'}"
+              [ngClass]="{'active' : a.ID_PERFIL == IdPerfil}" >
+
+                <td><i class="i-Business-Man"></i> {{ a.DESCRICAO }}</td>
+                
+                <td style="text-align: center">  
+                  <i  *ngIf="a.STATUS==false" class="icofont-close-circled" style="color: red; font-size: 25px"></i>
+                  
+                
+                
+                  <i *ngIf="a.STATUS==true" class="icofont-check-circled" style="color: green;font-size: 25px"></i>
+                </td>
+                <td> 
+                    <button class="btn btn-sm btn-outline-primary mr-2" ngbTooltip="Alterar Status"(click)="modalEditarPerfil(perfilModal,a)">
+                      <i  class="i-Pen-2"></i>
+                    </button>
+                </td>              
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- CARD DE TELAS -->
+  <div class="col-md-6"  >
+      <div class="card mb-3"style="height: 450px">
+        <div class="card-body pb-0">
+          <div class="card-title negrito"> <i class="i-Monitor-5"></i> Telas </div>
+          <hr>
+          <!-- <app-tela></app-tela> -->
+
+          <table id="tabelaTela" [dtOptions]="dtOptionsT" [dtTrigger]='dtTriggerTelas' datatable class="table table-sm mt-2">
+            <thead class="thead-default-jca">
+              <tr>
+                <th class="col-md-4" scope="col" style="width: 80%">Descrição</th>
+                <th class="col-md-4"scope="col" style="width: 20%; text-align: center">Permissão na Tela?</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="telas">
+              <tr *ngFor="let a of telas" (click)="selecionarTela(a)" [ngStyle]="{'cursor': 'pointer'}"
+              [ngClass]="{'active' : a.ID_TELA == IdTela}" >     
+                <td><i class="i-Monitor-5"></i> {{ a.DESCRICAO }}</td>  
+                <td style="text-align: center">  
+                  <i  *ngIf="a.STATUS==false" class="icofont-close-circled" style="color: red; font-size: 25px"></i>
+                  
+                
+                
+                  <i *ngIf="a.STATUS==true" class="icofont-check-circled" style="color: green;font-size: 25px"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+ <!-- CARD DE PERMISSÃO -->
+
+ <div class="col-md-12" >
+    <div class="card mb-3" >
+      <div class="card-body pb-0" >
+        <div class="card-title negrito"> <i class="i-Key"></i> Permissões </div>
+        <hr>
+        <app-permissao></app-permissao>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--MODAL (EDITAR - CRIAR)--> 
+
+  <ng-template #perfilModal let-modal>
+      
+      <div class="modal-header" [ngStyle]="{ background: colorModal }" style="padding-top: 5px; padding-bottom: 5px;">
+        <h4 class="modal-title" id="modal-basic-title" style="color: #fff">
+          <i class="i-Administrator"></i> {{ title }} Pefil
+        </h4>
+        <button type="button" class="close" aria-label="Close" style="color: #FFF" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="validacao">
+        </div>
+        <form [formGroup]="formPerfil">
+          <div class="row" style="margin:5px;">
+             
+            <div class="col-md-8 form-group pl-0">
+              <label for="fone">Descrição</label>
+              <input type="text" class="form-control" formControlName="DESCRICAO" />
+            </div>
+    
+            <div class="col-md-4 form-group pl-0">
+              <label for="status">Status</label>
+              <select class="form-control" formControlName="STATUS">
+                <option value="ATIVO">ATIVO</option>
+                <option value="INATIVO">INATIVO</option>
+              </select>
+            </div>
+            
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger btn-rounded" (click)="modal.close('Save click')">
+          <i class="icofont-close-circled"></i> Fechar
+        </button>
+        <button type="submit" class="btn btn-outline-primary btn-rounded" (click)="alterarPerfil()"
+          [disabled]="foneValido == false">
+          <i class="icofont-check"></i> Salvar
+        </button>
+      </div>
+
+  </ng-template>
+
+
+<!--MODAL (CLONE)-->
+  <ng-template #perfilModalClone let-modal>
+      
+    <div class="modal-header" [ngStyle]="{ background: colorModal }" style="padding-top: 5px; padding-bottom: 5px;">
+      <h4 class="modal-title" id="modal-basic-title" style="color: #fff">
+        <i class="i-Administrator"></i> {{ title }} Pefil
+      </h4>
+      <button type="button" class="close" aria-label="Close" style="color: #FFF" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="formClone">
+        <div class="row" style="margin:5px;">
+           
+          <div class="col-md-6 form-group">
+            <label>Perfil Original</label>
+            <select class="form-control" formControlName="ID_PERFIL_ORIGINAL" > 
+                <option value=""> </option>            
+              <option *ngFor="let c of perfil" value="{{c.ID_PERFIL}}"> {{c.DESCRICAO}} </option>
+            </select>
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label>Perfil Clone</label>
+            <select class="form-control" formControlName="ID_PERFIL_CLONE" > 
+                <option value=""> </option>             
+              <option *ngFor="let p of perfil" value="{{p.ID_PERFIL}}"> {{p.DESCRICAO}} </option>
+            </select>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger btn-rounded" (click)="modal.close('Save click')">
+        <i class="icofont-close-circled"></i> Fechar
+      </button>
+      <button type="submit" class="btn btn-outline-primary btn-rounded" (click)="clonarPerfil()">
+        <i class="icofont-check"></i> Clonar
+      </button>
+    </div>
+    
+  </ng-template>

@@ -1,0 +1,72 @@
+
+
+<div class="row mt-5">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+
+
+    <div class="card mb-3">
+      <!-- <div class="text-center mt-2">
+        <img src="./assets/images/icons/fone_blue.svg" width="70">
+      </div>
+      <div class="modal-header" [ngStyle]="{'background': '#5a5a5a'}" style="padding-top: 5px; padding-bottom: 5px;">
+        <h4 class="modal-title" id="modal-basic-title" style="color: #fff"> <i class="icofont-funnel"></i>
+           Filtros
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: #fff">&times;</span>
+        </button>
+    </div> -->
+
+
+    <div class="row">    
+    </div>
+
+    <div class="modal-body">      
+        <form [formGroup]="formFiltro" >
+               
+            <div class=""> 
+                <i class="icofont-live-support" style="font-size: 22px"> Escolha um contratante e um período: </i>
+            </div>
+          <hr>
+          <div class="row">
+                        <div class="col-md-12 form-group">
+                          
+                            <label>Contratante</label>
+
+                            <select class="form-control" formControlName="contratanteId" >
+                              <option value="{{a.CONTRATANTE_ID}}" *ngFor="let a of listaContratante">{{a.FANTASIA}}</option>
+                            </select>
+
+                        </div>                  
+          </div>
+
+            <div class="row">              
+              <div class="col-md-6 form-group">
+                    Data Inicial
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" id="btnGroupAddon"><i class="icofont-ui-calendar"></i></div>
+                        </div>
+                        <input type="date" class="form-control" placeholder="Data Inicial" formControlName="dataInicial">
+                    </div>
+                </div>
+                
+                <div class="col-md-6 form-group">
+                    Data Final
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" id="btnGroupAddon"><i class="icofont-ui-calendar"></i></div>
+                        </div>
+                        <input type="date" class="form-control" placeholder="Data Final" formControlName="dataFinal" >
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="salvarFiltros()" [disabled]="formFiltro.invalid" > <i class="icofont-check"></i> Acessar</button>
+    </div>
+    </div>
+  </div>
+</div>

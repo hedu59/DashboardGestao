@@ -1,0 +1,57 @@
+.campo_obrigatorio{
+    color: red;
+    font-weight: bold
+}
+
+.table-pesquisa-devedor tr > td{
+    cursor: pointer
+}
+
+
+.thead-blue-jca {
+    background-color: #466eb0;
+    color: #fff;
+}
+
+.thead-default-jca {
+    background-color: #466eb4;
+    color: #000;
+}
+
+.negrito {
+    font-weight: bold!important;
+    color: #4363a8!important;
+    margin-bottom: 0px!important;
+}
+
+.card-titulos {
+    min-height: 390px!important;
+}
+
+.card-pesquisa-cliente {
+    min-height: 300px!important;
+}
+
+.card-pesquisa-dados {
+    min-height: 230px!important;
+}
+
+.card-devedor {
+    min-height: 210px!important;
+}
+
+.negrito {
+    font-weight: 999!important;
+    color: #466eb0;
+}
+
+.border {
+    border-bottom: 1px ridge;
+    padding: 1px;
+}
+
+.table tr.active td {
+    background-color: #f3f3f3 !important;
+    color: #000;
+  }
+  

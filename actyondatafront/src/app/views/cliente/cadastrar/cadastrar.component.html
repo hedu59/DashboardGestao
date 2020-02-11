@@ -1,0 +1,206 @@
+<ng-progress #progressBar></ng-progress>
+
+<div class="row">
+  <div class="col-md-6">
+    <h4> <i class="icofont-id-card"></i> Cadastro de Clientes / Titulos </h4>
+  </div>
+</div>
+<hr>
+<div class="row">
+
+  <div class="col-md-4" *ngFor="let alert of errosForm">
+    <ngb-alert class="alert-card mb-4" type="danger"  (close)="closeAlertCard(alert)">
+        <strong class="text-capitalize">{{alert.Property}}!</strong> {{alert.Message}}
+    </ngb-alert>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-12">
+    <form-wizard>
+
+      <wizard-step [title]="'Cliente'" [isValid]="formCliente.valid" (onNext)="onStep1Next($event, progressBar)">
+
+        <div class="row">
+          <div class="col-md-6">
+            <span *ngIf="nome">ID: <strong>{{devedor_id}} - {{nome}} </strong></span>
+          </div>
+          <div class="col-md-6 text-right">
+            <button class="btn btn-outline-success btn-rounded mb-1 btn-sm" (click)="novoCliente()"> <i class="icofont-ui-user"></i> Novo
+              Cliente
+            </button>
+          </div>
+        </div>
+
+        <form class="card-devedor" [formGroup]="formCliente">
+          <input type="hidden" formControlName="cliente_id">
+          <div class="row">
+            <div class="col-md-2 form-group">
+              <label>Contratante <span class="campo_obrigatorio">*</span></label>
+              <select class="form-control" formControlName="CONT_ID" [(ngModel)]="cliente.CONT_ID">
+                <option *ngFor="let c of listagemContratantes" value="{{c.CONTRATANTE_ID}}">{{ c.FANTASIA }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-4 form-group pl-0">
+              <label for="nome">Nome <span class="campo_obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="NOME" maxlength="55"
+                [(ngModel)]="cliente.NOME">
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label> CPF/CNPJ <span class="campo_obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="cpf" placeholder="CPF / CNPJ" formControlName="CPF"
+                [(ngModel)]="cliente.CPF" minlength="11" maxlength="14" (keypress)="somenteNumeros($event)" (blur)="verificaCpfExistente($event.target.value)">
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label>RG</label>
+              <input type="text" class="form-control" id="rg" placeholder="RG" formControlName="RG" maxlength="15"
+                [(ngModel)]="cliente.RG" >
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label>Identificador</label>
+              <input type="text" class="form-control" id="rg" placeholder="Identificador" maxlength="14"
+                [(ngModel)]="cliente.IDENTIFICADOR_ID" formControlName="IDENTIFICADOR_ID">
+            </div>
+
+            <div class="col-md-2 form-group">
+              <label> Data Nascimento</label>
+              <input type="text" class="form-control" id="data_nascimento" placeholder="DD/MM/AAAA"
+                [(ngModel)]="cliente.DATA_NASCIMENTO" formControlName="DATA_NASCIMENTO" [textMask]="{mask: dateMask}">
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label>Sexo</label>
+              <select class="form-control" formControlName="SEXO" [(ngModel)]="cliente.SEXO">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+              </select>
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label> CEP <span class="campo_obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP"
+                (blur)="preencherEndereco($event.target.value)" [(ngModel)]="cliente.CEP" formControlName="CEP" [textMask]="{mask: cepMask}">
+            </div>
+
+            <div class="col-md-3 form-group pl-0">
+              <label> Endereço <span class="campo_obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço"
+                [(ngModel)]="cep.endereco" formControlName="ENDERECO">
+            </div>
+
+            <div class="col-md-1 form-group pl-0">
+              <label> Número <span class="campo_obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="numero" placeholder="Número" formControlName="NUMERO"
+                [(ngModel)]="cliente.NUMERO">
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label> Complemento </label>
+              <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento"
+                [(ngModel)]="cep.complemento" formControlName="COMPLEMENTO">
+            </div>
+
+            <div class="col-md-2 form-group ">
+              <label> Bairro <span class="campo_obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro"
+                formControlName="BAIRRO" [(ngModel)]="cep.bairro">
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label> Cidade <span class="campo_obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade"
+                formControlName="CIDADE" [(ngModel)]="cep.cidade">
+            </div>
+
+            <div class="col-md-1 form-group pl-0">
+              <label>UF</label>
+              <select class="form-control" name="uf" [(ngModel)]="cep.uf" formControlName="UF">
+                <option value="">--</option>
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AM">AM</option>
+                <option value="AP">AP</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MG">MG</option>
+                <option value="MS">MS</option>
+                <option value="MT">MT</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="PR">PR</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR</option>
+                <option value="RS">RS</option>
+                <option value="SC">SC</option>
+                <option value="SR">SE</option>
+                <option value="SP">SP</option>
+                <option value="TO">TO</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 form-group pl-0">
+              <label> Cônjuge </label>
+              <input type="text" class="form-control" id="conjuge" placeholder="Cônjuge" formControlName="NOME_CONJUGUE" maxlength="55"
+                [(ngModel)]="cliente.NOME_CONJUGUE">
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label>Nome Pai</label>
+              <input type="text" class="form-control" id="nome_pai" placeholder="Nome do Pai" formControlName="NOME_PAI" maxlength="55"
+                [(ngModel)]="cliente.NOME_PAI">
+            </div>
+
+            <div class="col-md-2 form-group pl-0">
+              <label>Nome Mãe</label>
+              <input type="text" class="form-control" id="nome_mae" placeholder="Nome da Mãe" formControlName="NOME_MAE" maxlength="55"
+                [(ngModel)]="cliente.NOME_MAE">
+            </div>
+
+          </div>
+        </form>
+      </wizard-step>
+
+      <!-- TELEFONES -->
+      <wizard-step [title]="'Telefones'" [isValid]="formCliente.valid" (onNext)="onStep2Next($event)" #telefoneModal
+        [isActive]="">
+        <app-fone></app-fone>
+      </wizard-step>
+
+      <!-- EMAILS -->
+      <wizard-step [title]="'E-mail'" [isValid]="formCliente.valid" (onNext)="onStep3Next($event)" [isActive]="">
+        <app-email ></app-email>
+      </wizard-step>
+
+      <!-- AVALISTA -->
+      <!-- <wizard-step [title]="'Avalista'" [isValid]="formCliente.valid" (onNext)="onStep4Next($event)" [isActive]="">
+        <app-avalista></app-avalista>
+      </wizard-step> -->
+
+      <!-- DADOS PROFISSIONAIS -->
+      <wizard-step [title]="'Dados Profissionais'" [isValid]="formCliente.valid" (onNext)="onStep5Next($event)"
+        [isActive]="">
+        <app-dados-profissionais></app-dados-profissionais>
+      </wizard-step>
+
+    </form-wizard>
+  </div>
+
+</div>
+
+<!-- INCLUSÃO / LISTAGEM DE TITULOS -->
+<div [hidden]="!carregarDivTitulo" id="hideTitulo">
+  <app-titulos></app-titulos>
+</div>
+<!-- FIM DA INCLUSÃO / LISTAGEM DE TITULOS -->

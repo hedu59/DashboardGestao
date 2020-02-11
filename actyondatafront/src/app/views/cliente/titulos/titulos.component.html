@@ -1,0 +1,192 @@
+<ng-progress #progressBar></ng-progress>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-titulos mb-3">
+      <div class="card-body">
+        <div class="card-title negrito">
+          <div class="row">
+            <div class="col-md-6"><i class="icofont-coins"></i> Listagem de Titulos </div>
+            <div class="col-md-6 text-right">
+              <!-- <button class="btn btn-success btn-sm" (click)="open(telefoneModal)"">Novo</button> -->
+              <button class="btn btn-outline-success btn-sm btn-rounded mb-1" (click)="open(tituloModal)"><i
+                  class="icofont-money-bag"></i>
+                Novo Titulo</button>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row ml-0 mb-1">
+          <input type="checkbox" class="ml-2" id="filtrarValor" name="filtrarValor" (click)="filtrarValor()">
+          <label for="filtrarValor" class="ml-2 mb-0">Mostrar somente titulos em aberto</label>
+        </div>
+        <table id="tableTitulos" datatable [dtOptions]="dtTituloOptions" [dtTrigger]="dtTrigger" class="table table-sm">
+          <thead class="thead-default-jca">
+            <tr>
+              <th scope="col" style="width: 10%">Tipo Titulo</th>
+              <th scope="col" style="width: 10%">Nº Contrato</th>
+              <th scope="col" style="width: 10%">Nº Documento</th>
+              <th scope="col" style="width: 10%">Plano</th>
+              <th scope="col" style="width: 10%">Vencimento</th>
+              <th scope="col" style="width: 10%; text-align: right">Valor</th>
+              <th scope="col" style="width: 30%">Observação</th>
+              <th scope="col" style="width: 10%">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let titulos of titulosCliente" [ngStyle]="{'color':getColor(titulos.VALOR)}">
+              <td>{{titulos.DESCRICAO}} </td>
+              <td>{{titulos.NUMERO_CONTRATO}}</td>
+              <td>{{titulos.NUMERO_DOCUMENTO}}</td>
+              <td>{{titulos.NUMERO_PRESTACAO}} / {{titulos.QTDE_PRESTACAO}}</td>
+              <td>{{titulos.DATA_VENCIMENTO | convertDataBr}}</td>
+              <td style="text-align: right">{{titulos.VALOR | currency:'BRL':true}} </td>
+              <td class="tabela" title="{{titulos.OBSE}}">{{titulos.OBSE}}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary mr-2" ngbTooltip="Alterar Titulo"
+                  (click)="editarTitulo(tituloModal, titulos)">
+                  <i class="icofont-ui-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger mr-2" ngbTooltip="Excluir Titulo"
+                  (click)="excluirTitulo(modalConfirm, titulos.TITULO_ID, titulos.VALOR, titulos.DATA_VENCIMENTO)">
+                  <i class="icofont-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE TITULOS (INCLUSÃO E EDIÇÃO) -->
+<ng-template #tituloModal let-modal>
+
+  <div class="modal-header" [ngStyle]="{'background': colorModal}" style="padding-top: 5px; padding-bottom: 5px;">
+    <h4 class="modal-title" id="modal-basic-title" style="color: #fff"><i class="icofont-money"></i> {{title}} Titulo
+    </h4>
+    <button type="button" class="close" aria-label="Close" style="color: #FFF" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="validacao">
+      <ul *ngIf="campos_invalidos">
+        <li class="campo_obrigatorio" *ngFor="let r of retornoMensagem">{{r.Message}}</li>
+      </ul>
+    </div>
+    <form [formGroup]="formTitulo" (ngSubmit)="gravarTitulo()">
+      <div class="row">
+
+        <div class="col-md-4 form-group">
+          <label> Tipo <span class="campo_obrigatorio">*</span> </label>
+          <select class="form-control" formControlName="tipo_titulo">
+            <option *ngFor="let a of tipoTitulo" value="{{a.TIPO_TITULO_ID}}">{{a.DESCRICAO}}</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+          <label> Nº Contrato <span class="campo_obrigatorio">*</span> </label>
+          <input type="text" class="form-control" id="contrato" placeholder="Nº Contrato"
+            formControlName="numero_contrato">
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+          <label> Nº Documento </label>
+          <input type="text" class="form-control" id="documento" placeholder="Nº Documento"
+            formControlName="numero_documento">
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label> Parcela </label>
+          <input type="text" class="form-control" id="parcela" placeholder="Ex: 1" formControlName="parcela">
+        </div>
+
+        <div class="col-md-2 form-group pl-0">
+          <label> Plano </label>
+          <input type="text" class="form-control" id="plano" placeholder="Ex: 10" formControlName="plano">
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+          <label> Vencimento <span class="campo_obrigatorio">*</span> </label>
+          <input type="text" class="form-control" id="vencimento" placeholder="DD/MM/AAAA" formControlName="vencimento"
+            [textMask]="{mask: dateMask}">
+          <!-- <div class="input-group">
+            <input id="picker1" class="form-control datepicker" placeholder="DD/MM/AAAA" name="dp" ngbDatepicker
+              #dp="ngbDatepicker" [textMask]="{mask: dateMask}">
+            <div class="input-group-append">
+              <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+                <i class="icon-regular i-Calendar-4"></i>
+              </button>
+            </div>
+          </div> -->
+        </div>
+
+        <div class="col-md-4 form-group pl-0">
+          <label style="float: right"> Valor (R$) <span class="campo_obrigatorio">*</span> </label>
+          <!-- <input type="text" class="form-control text-right valor" id="valor" name="valor" placeholder="99,99" formControlName="valor" [(ngModel)]="tituloModel.VALOR"> -->
+          <input currencyMask type="text" formControlName="valor" id="valor" name="valor"
+            class="form-control text-right" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+        </div>
+
+        <div class="col-md-12 form-group">
+          <label> Terceiro / Aluno </label>
+          <input type="text" class="form-control" id="observacao" placeholder="Observação" formControlName="terceiro">
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label style="float: right"> R$ Adc 1 </label>
+          <!-- <input type="text" class="form-control text-right valor" placeholder="R$ 99,99" formControlName="valor_adicional_1"> -->
+          <input currencyMask type="text" formControlName="valor_adicional_1" [(ngModel)]="tituloModel.VALOR_ADICIONAL1"
+            class="form-control text-right" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+        </div>
+
+        <div class="col-md-2 form-group pl-0">
+          <label style="float: right"> R$ Adc 2 </label>
+          <!-- <input type="text" class="form-control text-right valor" placeholder="R$ 99,99" formControlName="valor_adicional_2"> -->
+          <input currencyMask type="text" formControlName="valor_adicional_2" [(ngModel)]="tituloModel.VALOR_ADICIONAL2"
+            class="form-control text-right" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+        </div>
+
+        <div class="col-md-8 form-group pl-0">
+          <label> Observação </label>
+          <input type="text" class="form-control" id="observacao" placeholder="Observação" formControlName="observacao">
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-primary btn-rounded" (click)="gravarTitulo(progressBar)"
+      [disabled]="!formTitulo.valid"> <i class="icofont-check"></i> Salvar</button>
+    <button type="button" class="btn btn-outline-danger btn-rounded" (click)="modal.close('Save click')"> <i
+        class="icofont-close-circled"></i> Fechar </button>
+  </div>
+</ng-template>
+
+<!-- MODAL PARA CONFIRMAÇÃO DA EXCLUSÃO DE TITULO -->
+<ng-template #modalConfirm let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title"> Exclusão de Titulo </h4>
+    <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="text-center">
+      <img src="/src/assets/images/icons/detele.svg" width="80">
+    </div>
+    <p class="text-center mt-4"><strong>Confirma a exclusão do titulo?</strong>
+    </p>
+    <ul>
+      <li><strong>Vencimento: <span class="text-primary">"{{vencimento_exclusao | convertDataBr}}"</span> </strong></li>
+      <li><strong>Valor: <span class="text-primary">"{{valor_exclusao | currency:'BRL':true}}"</span> </strong></li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="modal.close('Ok')">Confirmar</button>
+    <button type="button" class="btn btn-outline-secondary btn-rounded"
+      (click)="modal.dismiss('cancel')">Cancelar</button>
+  </div>
+</ng-template>

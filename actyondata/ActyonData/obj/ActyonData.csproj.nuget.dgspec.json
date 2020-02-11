@@ -1,0 +1,327 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\devGit\\actyondata\\ActyonData\\ActyonData.csproj": {}
+  },
+  "projects": {
+    "E:\\devGit\\actyondata\\ActyonData.Domain\\ActyonData.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\devGit\\actyondata\\ActyonData.Domain\\ActyonData.Domain.csproj",
+        "projectName": "ActyonData.Domain",
+        "projectPath": "E:\\devGit\\actyondata\\ActyonData.Domain\\ActyonData.Domain.csproj",
+        "packagesPath": "C:\\Users\\CarlosEduardo\\.nuget\\packages\\",
+        "outputPath": "E:\\devGit\\actyondata\\ActyonData.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\CarlosEduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "FluentValidator": {
+              "target": "Package",
+              "version": "[2.0.4, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "E:\\devGit\\actyondata\\ActyonData.Infra\\ActyonData.Infra.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\devGit\\actyondata\\ActyonData.Infra\\ActyonData.Infra.csproj",
+        "projectName": "ActyonData.Infra",
+        "projectPath": "E:\\devGit\\actyondata\\ActyonData.Infra\\ActyonData.Infra.csproj",
+        "packagesPath": "C:\\Users\\CarlosEduardo\\.nuget\\packages\\",
+        "outputPath": "E:\\devGit\\actyondata\\ActyonData.Infra\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\CarlosEduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {
+              "E:\\devGit\\actyondata\\ActyonData.Domain\\ActyonData.Domain.csproj": {
+                "projectPath": "E:\\devGit\\actyondata\\ActyonData.Domain\\ActyonData.Domain.csproj"
+              },
+              "E:\\devGit\\actyondata\\ActyonData.Shared\\ActyonData.Shared.csproj": {
+                "projectPath": "E:\\devGit\\actyondata\\ActyonData.Shared\\ActyonData.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[1.60.6, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "E:\\devGit\\actyondata\\ActyonData.Shared\\ActyonData.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\devGit\\actyondata\\ActyonData.Shared\\ActyonData.Shared.csproj",
+        "projectName": "ActyonData.Shared",
+        "projectPath": "E:\\devGit\\actyondata\\ActyonData.Shared\\ActyonData.Shared.csproj",
+        "packagesPath": "C:\\Users\\CarlosEduardo\\.nuget\\packages\\",
+        "outputPath": "E:\\devGit\\actyondata\\ActyonData.Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\CarlosEduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "E:\\devGit\\actyondata\\ActyonDataApplication\\ActyonData.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\devGit\\actyondata\\ActyonDataApplication\\ActyonData.Application.csproj",
+        "projectName": "ActyonData.Application",
+        "projectPath": "E:\\devGit\\actyondata\\ActyonDataApplication\\ActyonData.Application.csproj",
+        "packagesPath": "C:\\Users\\CarlosEduardo\\.nuget\\packages\\",
+        "outputPath": "E:\\devGit\\actyondata\\ActyonDataApplication\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\CarlosEduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {
+              "E:\\devGit\\actyondata\\ActyonData.Infra\\ActyonData.Infra.csproj": {
+                "projectPath": "E:\\devGit\\actyondata\\ActyonData.Infra\\ActyonData.Infra.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "FluentValidator": {
+              "target": "Package",
+              "version": "[2.0.4, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "E:\\devGit\\actyondata\\ActyonData\\ActyonData.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\devGit\\actyondata\\ActyonData\\ActyonData.csproj",
+        "projectName": "ActyonData",
+        "projectPath": "E:\\devGit\\actyondata\\ActyonData\\ActyonData.csproj",
+        "packagesPath": "C:\\Users\\CarlosEduardo\\.nuget\\packages\\",
+        "outputPath": "E:\\devGit\\actyondata\\ActyonData\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\CarlosEduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {
+              "E:\\devGit\\actyondata\\ActyonData.Domain\\ActyonData.Domain.csproj": {
+                "projectPath": "E:\\devGit\\actyondata\\ActyonData.Domain\\ActyonData.Domain.csproj"
+              },
+              "E:\\devGit\\actyondata\\ActyonData.Infra\\ActyonData.Infra.csproj": {
+                "projectPath": "E:\\devGit\\actyondata\\ActyonData.Infra\\ActyonData.Infra.csproj"
+              },
+              "E:\\devGit\\actyondata\\ActyonDataApplication\\ActyonData.Application.csproj": {
+                "projectPath": "E:\\devGit\\actyondata\\ActyonDataApplication\\ActyonData.Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "FluentValidator": {
+              "target": "Package",
+              "version": "[2.0.4, )"
+            },
+            "JWT": {
+              "target": "Package",
+              "version": "[5.2.3, )"
+            },
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.1, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Authentication.Core": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.2, )"
+            },
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.1.9, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
